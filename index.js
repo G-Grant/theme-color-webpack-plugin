@@ -13,6 +13,9 @@ class GenerateTheme {
 
     apply(compiler) {
         const { themeVariables, outputFilePath } = this.options;
+        compiler.hooks.afterEnvironment.tap('GenerateTheme', (err) => {
+            generateTheme(this.options).then(() => console.log(chalk.green('afterEnvironment 生成主题色成功')));
+        });
         compiler.hooks.watchRun.tapAsync('GenerateTheme', ({ watchFileSystem }, callback) => {
             const updateFiles = Object.keys(watchFileSystem.watcher.mtimes);
             // 取出更改的 less 文件
@@ -45,12 +48,6 @@ class GenerateTheme {
                     console.log(chalk.green('生成主题色成功'));
                     fs.writeFileSync(outputFilePath, css);
                 }
-                callback();
-            });
-        });
-        compiler.hooks.beforeRun.tapAsync('GenerateTheme', (err, callback) => {
-            generateTheme(this.options).then(() => {
-                console.log(chalk.green('生成主题色成功'));
                 callback();
             });
         });
