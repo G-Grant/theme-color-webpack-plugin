@@ -5,6 +5,9 @@
 <font color=red>修复</font>
 <font color=red><strong>删除</strong></font>
 
+# 2.0.0
+1. <font color=red>修复</font> 支持 webpack 5
+
 # 1.1.1
 1. <font color=orange>修改</font> 主题色编译工作提前
 
